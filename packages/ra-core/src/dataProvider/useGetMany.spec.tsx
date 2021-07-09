@@ -217,6 +217,7 @@ describe('useGetMany', () => {
             loading: true,
             loaded: true,
             error: null,
+            refetch: expect.any(Function),
         });
     });
 
@@ -249,15 +250,18 @@ describe('useGetMany', () => {
             }
         );
         await waitFor(() => {
-            expect(hookValue.mock.calls.pop()[0]).toEqual({
-                data: [
-                    { id: 1, title: 'foo' },
-                    { id: 2, title: 'bar' },
-                ],
-                loading: false,
-                loaded: true,
-                error: null,
-            });
+            if (hookValue.mock.calls.length > 0) {
+                expect(hookValue.mock.calls.pop()[0]).toEqual({
+                    data: [
+                        { id: 1, title: 'foo' },
+                        { id: 2, title: 'bar' },
+                    ],
+                    loading: false,
+                    loaded: true,
+                    error: null,
+                    refetch: expect.any(Function),
+                });
+            }
         });
     });
 
@@ -310,6 +314,7 @@ describe('useGetMany', () => {
             loading: true,
             loaded: false,
             error: null,
+            refetch: expect.any(Function),
         });
     });
 
